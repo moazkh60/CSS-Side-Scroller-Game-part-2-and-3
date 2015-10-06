@@ -1,0 +1,191 @@
+ <!DOCTYPE html>   
+    <html lang="en">
+        <head>     
+            <meta charset="utf-8">    
+            <title>SIDE Scroller GAME</title>   
+		
+		<style>		
+			body{
+				background-image: url("Images/clouds.jpg");
+				position: relative;
+				overflow: hidden;
+				-webkit-animation: game-background 10s linear infinite;
+				animation: game-background 10s linear infinite;
+			}
+			
+			@-webkit-keyframes game-background {
+			from {background-position: 0 0;}
+			to {background-position: -800px 0;}
+			}
+			 
+			@keyframes game-background {
+			from {background-position: 0 0;}
+			to {background-position: -800px 0;}
+			}
+			
+			#helicopter1 {
+			position:fixed;
+			top:600px;
+			border: solid 3px;
+			border-color:red;
+			z-index:3;
+			-webkit-animation: moveclouds 7s linear infinite;
+			-moz-animation: moveclouds 7s linear infinite;
+			-o-animation: moveclouds 7s linear infinite;
+			}
+
+			#helicopter2 {
+				position:fixed;
+				top:300px;
+				left: 100px;
+				z-index:3;
+				border: solid 3px;
+			border-color:green;
+				-webkit-animation: moveclouds 13s linear infinite;
+				-moz-animation: moveclouds 13s linear infinite;
+				-o-animation: moveclouds 13s linear infinite;
+			}
+
+			#helicopter3 {
+				position:absolute;
+				z-index:3;
+				left:50px;
+				border: solid 3px;
+			border-color:blue;
+				-webkit-animation: moveclouds 10s linear infinite;
+				-moz-animation: moveclouds 10s linear infinite;
+				-o-animation: moveclouds 10s linear infinite;
+			}
+			
+			#helicopter4 {
+				position:absolute;
+				z-index:3;
+				left:450px;
+				top:15px;
+				border: solid 3px;
+			border-color:yellow;
+				-webkit-animation: moveclouds 10s linear infinite;
+				-moz-animation: moveclouds 10s linear infinite;
+				-o-animation: moveclouds 10s linear infinite;
+			}
+			
+			@keyframes moveback {
+				from {background-position: 0 0;}
+				to {background-position: 100% 0;}
+			}
+
+			@-webkit-keyframes moveclouds {
+				0% {margin-left: 1000px;}
+				100% {margin-left: -500px;}
+			}
+			@-moz-keyframes moveclouds {
+				0% {margin-left: 1000px;}
+				100% {margin-left: -500px;}
+			}
+			@-o-keyframes moveclouds {
+				0% {margin-left: 1000px;}
+				100% {margin-left: -500px;}
+			}		
+																
+		</style>
+
+		<script type="text/javascript">
+
+			function leftPressed(){
+				var myPlayer = document.getElementById("player");
+				myPlayer.style.left = parseInt(myPlayer.style.left) - 5 +'px';
+			}
+			function rightPressed(){
+				var myPlayer = document.getElementById("player");
+				myPlayer.style.left = parseInt(myPlayer.style.left)+ 5+'px';
+			}
+			function upPressed(){
+				var myPlayer = document.getElementById("player");
+				myPlayer.style.top = parseInt(myPlayer.style.top) - 5 + 'px';
+			}
+			function downPressed(){
+				var myPlayer = document.getElementById("player");
+				myPlayer.style.top = parseInt(myPlayer.style.top) + 5 + 'px';
+			}
+			
+			function movePlayer(event){
+				if(event.keyCode == 37){
+					leftPressed();
+					
+				}
+				else if(event.keyCode == 39){
+					rightPressed();
+				}
+				else if(event.keyCode == 38){
+					upPressed();
+				}
+				else if(event.keyCode == 40){
+					downPressed();
+				}
+			}
+			
+			function docReady(){
+				window.addEventListener('keydown',movePlayer);
+				window.onload = generateEnemy;
+				
+				var enemy1 = document.getElementById('helicopter4');		
+				var myPlayer = document.getElementById("player");
+
+               setInterval(checkCollisionWithPlayer,100);
+		
+				
+			}
+     
+			function generateEnemy() {
+
+				
+
+	            document.getElementById('helicopter1').style.top = Math.floor((Math.random() * 700) + 1) + "px";
+			    document.getElementById('helicopter2').style.top = Math.floor((Math.random() * 1000) + 1)+ "px";
+				document.getElementById('helicopter3').style.top = Math.floor((Math.random() * 700) + 1)+ "px";
+			    document.getElementById('helicopter4').style.top = Math.floor((Math.random() * 1500) + 1)+ "px";
+				
+	        }
+			
+			function comparePositions(a, b) {
+				return !(
+					((a.y + a.height) < (b.y)) ||
+					(a.y > (b.y + b.height)) ||
+					((a.x + a.width) < b.x) ||
+					(a.x > (b.x + b.width))
+				);
+			}
+
+
+			function checkCollisionWithPlayer(){
+				var enemy1 = document.getElementById('helicopter1');
+				var enemy2 = document.getElementById('helicopter2');		
+				var enemy3 = document.getElementById('helicopter3');		
+				var enemy4 = document.getElementById('helicopter4');		
+
+				var myPlayer = document.getElementById("player");
+
+
+				if(comparePositions(enemy4,myPlayer) == false || comparePositions(enemy2,myPlayer) == false || comparePositions(enemy3,myPlayer) == false || comparePositions(enemy4,myPlayer) == false){
+					window.alert("Killed");
+				}
+
+		
+				
+			}	
+
+        	
+		</script>
+        </head> 
+    <body onload="docReady()" onkeydown="" onkeyup="" >		        
+	
+	
+	<div id="player"style="position:absolute;left:200; top:100px;">
+		<img  src="Images/player.png"/  >
+	</div>
+	<div id="helicopter1"><img src="Images/helicopter.png" width="144px" height="144px"></div>
+	<div id="helicopter2"><img src="Images/helicopter.png" width="144px" height="144px"></div>
+	<div id="helicopter3"><img src="Images/helicopter.png" width="144px" height="144px"></div> 
+	<div id="helicopter4"><img src="Images/helicopter.png" width="144px" height="144px"></div> 
+	</body>
+	</html>

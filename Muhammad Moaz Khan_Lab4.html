@@ -26,44 +26,56 @@
 			#helicopter1 {
 			position:fixed;
 			top:600px;
-			border: solid 3px;
-			border-color:red;
+			left:100px;
+			bottom:0;
 			z-index:3;
 			-webkit-animation: moveclouds 7s linear infinite;
 			-moz-animation: moveclouds 7s linear infinite;
 			-o-animation: moveclouds 7s linear infinite;
 			}
 
+			#points{
+				text-align: center;
+    				size: 30px;
+    				font-size: 50px;
+    				color: rebeccapurple;
+			}
+			#score{
+				text-align: center;
+    				size: 30px;
+    				font-size: 40px;
+    				color: rebeccapurple;
+			}
+
 			#helicopter2 {
 				position:fixed;
 				top:300px;
 				left: 100px;
+				
 				z-index:3;
-				border: solid 3px;
-			border-color:green;
+				
 				-webkit-animation: moveclouds 13s linear infinite;
 				-moz-animation: moveclouds 13s linear infinite;
 				-o-animation: moveclouds 13s linear infinite;
 			}
 
 			#helicopter3 {
-				position:absolute;
+				position:fixed;
 				z-index:3;
 				left:50px;
-				border: solid 3px;
-			border-color:blue;
+				top:60px;
+			
 				-webkit-animation: moveclouds 10s linear infinite;
 				-moz-animation: moveclouds 10s linear infinite;
 				-o-animation: moveclouds 10s linear infinite;
 			}
 			
 			#helicopter4 {
-				position:absolute;
+				position:fixed;
 				z-index:3;
 				left:450px;
-				top:15px;
-				border: solid 3px;
-			border-color:yellow;
+				top:150px;
+				
 				-webkit-animation: moveclouds 10s linear infinite;
 				-moz-animation: moveclouds 10s linear infinite;
 				-o-animation: moveclouds 10s linear infinite;
@@ -93,11 +105,11 @@
 
 			function leftPressed(){
 				var myPlayer = document.getElementById("player");
-				myPlayer.style.left = parseInt(myPlayer.style.left) - 5 +'px';
+				myPlayer.style.left = parseInt(myPlayer.style.left) - 5 + 'px';
 			}
 			function rightPressed(){
 				var myPlayer = document.getElementById("player");
-				myPlayer.style.left = parseInt(myPlayer.style.left)+ 5+'px';
+				myPlayer.style.left = parseInt(myPlayer.style.left) + 5 + 'px';
 			}
 			function upPressed(){
 				var myPlayer = document.getElementById("player");
@@ -140,24 +152,34 @@
 
 				
 
-	            document.getElementById('helicopter1').style.top = Math.floor((Math.random() * 700) + 1) + "px";
-			    document.getElementById('helicopter2').style.top = Math.floor((Math.random() * 1000) + 1)+ "px";
-				document.getElementById('helicopter3').style.top = Math.floor((Math.random() * 700) + 1)+ "px";
-			    document.getElementById('helicopter4').style.top = Math.floor((Math.random() * 1500) + 1)+ "px";
+	            document.getElementById('helicopter1').style.top = Math.floor((Math.random() * 1600) + 1) + "px";
+		    document.getElementById('helicopter2').style.top = Math.floor((Math.random() * 1800) + 1)+ "px";
+		    document.getElementById('helicopter3').style.top = Math.floor((Math.random() * 1500) + 1)+ "px";
+		    document.getElementById('helicopter4').style.top = Math.floor((Math.random() * 1100) + 1)+ "px";
 				
 	        }
-			
-			function comparePositions(a, b) {
-				return !(
-					((a.y + a.height) < (b.y)) ||
-					(a.y > (b.y + b.height)) ||
-					((a.x + a.width) < b.x) ||
-					(a.x > (b.x + b.width))
-				);
-			}
+
+function detectCollision(obj1,obj2){
+	
+
+
+}
+								
+		function comparePositions(a, b) {
+				console.log("a.offestTop"+a.offsetTop);
+				console.log("b.offsetTop"+b.offsetTop);
+    			return !(
+        			((a.offsetTop + a.clientHeight) < (b.offsetTop)) ||
+        			(a.offsetTop > (b.offsetTop + b.clientHeight)) ||
+        			((a.offsetLeft + a.clientWidth) < b.offsetLeft) ||
+       				(a.offsetRight > (b.offsetLeft + b.clientWidth))
+    			);
+}
 
 
 			function checkCollisionWithPlayer(){
+				var score = document.getElementById('score');
+
 				var enemy1 = document.getElementById('helicopter1');
 				var enemy2 = document.getElementById('helicopter2');		
 				var enemy3 = document.getElementById('helicopter3');		
@@ -165,13 +187,49 @@
 
 				var myPlayer = document.getElementById("player");
 
-
-				if(comparePositions(enemy4,myPlayer) == false || comparePositions(enemy2,myPlayer) == false || comparePositions(enemy3,myPlayer) == false || comparePositions(enemy4,myPlayer) == false){
-					window.alert("Killed");
-				}
-
-		
 				
+				if(comparePositions(myPlayer,enemy4) == true){
+					//window.alert("Collided");
+					enemy4.style.display="none";
+					enemy4.offsetLeft = parseInt(enemy4.offsetLeft)+3000+'px';
+					enemy4.style.display="block";
+					score.innerHTML = parseInt(score.innerHTML)-10;
+					
+				} 
+				else if( comparePositions(myPlayer,enemy3) == true){
+					//window.alert("Collided");
+					enemy3.style.display="none";
+					
+					enemy3.offsetLeft = parseInt(enemy3.offsetLeft)+3000+'px';
+					enemy3.style.display="block";
+					score.innerHTML = parseInt(score.innerHTML)-10;
+
+					
+				} 
+				else if( comparePositions(myPlayer,enemy2) == true){
+					//window.alert("Collided");
+					enemy2.style.display="none";
+					
+					enemy2.offsetLeft = parseInt(enemy2.offsetLeft)+3000+'px';
+					enemy2.style.display="block";
+					score.innerHTML = parseInt(score.innerHTML)-10;
+					
+				}
+				else if(comparePositions(myPlayer,enemy1) == true){
+					//window.alert("Collided");
+					enemy1.style.display="none";
+					
+					enemy1.offsetLeft = parseInt(enemy1.offsetLeft)+3000+'px';
+					enemy1.style.display="block";
+					score.innerHTML = parseInt(score.innerHTML)-10;
+					
+				}
+				else{
+					if(parseInt(score.innerHTML) <= 0){
+						window.alert("GAME OVER");
+						score.innerHTML = 100;
+					};
+				}
 			}	
 
         	
@@ -180,9 +238,11 @@
     <body onload="docReady()" onkeydown="" onkeyup="" >		        
 	
 	
-	<div id="player"style="position:absolute;left:200; top:100px;">
+	<div id="player"style="position:fixed; left:300px; top:400px;">
 		<img  src="Images/player.png"/  >
 	</div>
+	<div id="points">Health</div>
+	<div id="score">100</div>
 	<div id="helicopter1"><img src="Images/helicopter.png" width="144px" height="144px"></div>
 	<div id="helicopter2"><img src="Images/helicopter.png" width="144px" height="144px"></div>
 	<div id="helicopter3"><img src="Images/helicopter.png" width="144px" height="144px"></div> 

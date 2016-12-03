@@ -1,4 +1,4 @@
-# Project Title
+# CSS Side Scroller Game part 2 & 3
 
 This is the 2nd part of side scroller game. In this project a sky background is side scrolling giving the effect of a plane flying in the sky in 2D and the player can be controlled using UP and DOWN buttons.
 
